@@ -1,0 +1,309 @@
+*{
+    padding: 0;
+    margin: 0;
+   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+
+/* 메뉴바 */
+
+header {
+  position: sticky;
+  top: 0px; /* 도달했을때 고정시킬 위치 */
+  padding: 0px;
+  background-color: rgb(255, 255, 255);
+  z-index: 10;
+  
+}
+
+.meun{ 
+  position: fixed;
+}
+  
+div{
+    text-align: center;
+  }
+nav{
+    font-size: 11pt;
+    font-family: 'PT Sans', Arial, Sans-serif;
+    position: relative;
+}
+nav ul{
+    padding: 0;
+    margin: 0 auto;
+    width: auto;
+}
+
+nav a{
+    line-height: 50px;
+  height: 50px;
+}
+nav li a{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    
+}
+nav li:last-child a{
+    border-right: 0;
+    }
+
+nav a#pull{
+    display: none;
+}
+
+
+
+/* 첫번째 */
+  ul{
+    
+    /*list-style-type: none;*/
+    margin: 0;
+    padding: 0;
+    background-color: #fffd86;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(14, 13, 0, 0.1);
+  }
+  li{
+    /* position: relative; */
+    display: inline-block;
+    
+  }
+  li a{
+    color: #3a3a3a;
+    text-align: center;
+    padding: 14.5px 16px;
+    text-decoration: none;
+  }
+  li a:hover{
+    /*color: #597812;*/
+    color: #a5a5a5;
+    font-weight:normal;
+  }
+
+/* 메인 이미지 */
+
+.image-box1 {
+  background-image: url(img/nail6.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 50vh;
+  z-index: 0;
+  position: relative;
+  padding: 0%;
+  vertical-align: top;
+  letter-spacing: 0;
+  word-spacing: 0;
+  margin-top: -5px;
+}
+
+.image-box2 {
+  background-image: url(img/nail5.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 50vh;
+  z-index: 0;
+  position: relative;
+  padding: 0%;
+  vertical-align: top;
+  letter-spacing: 0;
+  word-spacing: 0;
+  margin-top: -5px;
+}
+
+.image-box3 {
+  background-image: url(img/nail8.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 50vh;
+  z-index: 0;
+  position: relative;
+  padding: 0%;
+  vertical-align: top;
+  letter-spacing: 0;
+  word-spacing: 0;
+  margin-top: -5px;
+}
+
+
+/* 두번쩨 */
+
+.box {
+  position: relative;
+  width: 50%;
+}
+.box::after {
+  display: block;
+  content: "";
+  padding-bottom: 100%;
+}
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.myimg {
+  filter: brightness(1);
+  transition: 0.3s;
+}
+
+.myimg:hover {
+  filter: brightness(0.5);
+}
+
+
+
+
+
+
+
+
+
+/* 세번쨰 */
+.price-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.price-table th, .price-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.price-table th {
+  background-color: #f2f2f2;
+}
+
+
+
+/* 5번째 */
+
+.grid-container{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 200px 1fr 300px;
+  grid-row: 100px 1fr 100px;
+  gap:1rem;
+  grid-template-areas: "logo menu menu" "conrent conrent sidbar" "footer footer footer";
+}
+
+.grid-item{
+  padding: 1erm;
+  border-radius: 5px;
+  font-size: 10.5pt;
+}
+
+
+
+.grid-item:nth-child(1){
+  background-image: url(img/p01.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 0;
+  position: relative;
+  
+}
+
+.grid-item:nth-child(2){
+  grid-column: 2/4;  
+  background-color: #b4b4b4;
+  color: rgb(255, 255, 255);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 0;
+  position: relative;
+}
+
+.grid-item:nth-child(3){
+  grid-column: 1/3;
+  grid-row: 2/4;
+  background-color: #313131;
+  color: #b4b4b4;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 0;
+  position: relative;
+}
+
+.grid-item:nth-child(4){
+  background-color: #949494;;
+  color: #313131;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 0;
+  position: relative;
+}
+
+.grid-item:nth-child(5){
+  background-color: #202020;
+  color: #ffffff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 0;
+  position: relative;
+}
+
+
+
+/* 6번째 예약 */
+
+.reservation-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.form-button {
+  background-color: #fffd86;
+  color: #424242;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+
