@@ -1,242 +1,413 @@
-*{
-    padding: 0;
-    margin: 0;
-   box-sizing: border-box;
+const nav = document.querySelector("#nav")
+const marker = document.querySelector(".marker")
+const menus = document.querySelectorAll(".nav__menu > li > a")
+const sections = document.querySelectorAll(".section-flag");
+const overlay = document.querySelector("#overlay")
+const bigPhoto = document.querySelectorAll(".gallery__big_photo")
+const thumbnails = document.querySelectorAll(".gallery__thumbnail")
+const body = document.querySelector("body");
+const slide = document.querySelector("#slide");
+let slides = document.querySelectorAll("#slide>li")
+let timerId=0;
+let photoIndex=0;
+const photoCount = bigPhoto.length;
+const duration = 400;
+let bullet = 0;
+function bulletClassReset() {
+    bullet.forEach(a => {
+        a.classList.remove("on")
+    })
 }
-
-html {
-  scroll-behavior: smooth;
+function bulletIndex() {
+    let index = photoIndex + bullet.length;
+    index %= bullet.length;
+    bullet[index].classList.add("on");
 }
-
-body {
-    margin: 0;
-    padding: 0;
+// bullet 생성하는 함수
+function createBullets() {
+    const bullets = document.createElement("ul");
+    bullets.setAttribute("id","bullets");
+    overlay.appendChild(bullets);
+    slides.forEach((slide,index) => {
+        const a = document.createElement("a");
+        a.setAttribute("href","#");
+        a.innerHTML=`${index}`;
+        const li = document.createElement("li")
+        li.appendChild(a);
+        bullets.appendChild(li);
+    })
+    return bullet = document.querySelectorAll("#bullets > li > a");
 }
-
-
-
-
-
-/* 메뉴바 */
-
-header {
-  position: sticky;
-  top: 0px; /* 도달했을때 고정시킬 위치 */
-  padding: 0px;
-  background-color: rgb(255, 255, 255);
-  z-index: 10;
-  
+createBullets();
+// 갤러리 모달창 이벤트
+thumbnails.forEach(item => {
+    item.addEventListener("click",(e)=>{
+        e.preventDefault();
+        body.classList.add("scroll_hidden")
+        overlay.style.display = "block";
+        // 썸네일 원본 사진 링크와 갤러리 슬라이드 이미지 소스 링크 연결
+        for (let i=0; i<thumbnails.length; i++) {
+            var photo = thumbnails[i].lastElementChild;
+            bigPhoto[i].src = photo.href
+        };
+        });
+        document.querySelector("button.close").addEventListener("click", ()=> {
+            overlay.style.display = "none";
+            body.classList.remove("scroll_hidden")
+        
+    })
+})
+// 슬라이드 버튼 클릭 이벤트
+document.querySelector("#next_btn").addEventListener("click", nextSlideImage)
+document.querySelector("#prev_btn").addEventListener("click", prevSlideImage)
+// 다음 사진으로 슬라이드
+function nextSlideImage() {
+    photoIndex++;
+    photoIndex %= photoCount;
+    slide.style.left = "-100%";
+    slide.style.transition = duration+"ms";
+    window.setTimeout(()=>{ 
+        slide.appendChild(slide.firstElementChild);
+        slide.removeAttribute("style");
+    },duration)
+    bulletClassReset();
+    bulletIndex()
 }
+// 이전 사진으로 슬라이드
+function prevSlideImage() {
+    photoIndex --;
+    photoIndex %= photoCount;
+    slide.insertBefore(slide.lastElementChild,slide.firstChild);
+    slide.style.left = "-100%";
+    slide.style.transition = "0ms";
+    window.setTimeout(function(){ 
+        slide.style.left = 0;
+        slide.style.transition = duration+"ms";
+    },duration/2)
+    bulletClassReset();
+    bulletIndex()
+}
+//bullet을 클릭하면 해당하는 번호의 이미지로 슬라이드 되는 함수
+bullet.forEach((a,index)=>{
+    a.addEventListener("click", (e)=>{
+        e.preventDefault();
+        const clickedIndex = index;
+        let step = clickedIndex - photoIndex;
+        photoIndex = clickedIndex;
+        bulletClassReset();
+        this.classList.add("on");
+        a.classList.add("on");
+        slides = document.querySelectorAll("#slide>li");
+        let slidesArr = [...slides];
 
-.meun{ 
-  position: fixed;
-}
-  
-div{
-    text-align: center;
-  }
-nav{
-    font-size: 11pt;
-    font-family: 'PT Sans', Arial, Sans-serif;
-    position: relative;
-}
-nav ul{
-    padding: 0;
-    margin: 0 auto;
-    width: auto;
-}
+@@ -121,11 +121,10 @@ bullet.forEach((a,index)=>{
+            sliceSlides = slidesArr.slice(step);
+            slide.prepend(...sliceSlides);
+            slide.style.left = step * 100 + "%";
+            slide.style.transition = duration+"ms";
+            window.setTimeout(()=>{ 
+                slide.style.left = 0;
+                slide.style.transition = "0ms";
+            },duration)
+                slide.style.transition = duration+"ms";
+            },)
+        }
+    })
+})
 
-nav a{
-    line-height: 50px;
-  height: 50px;
-}
-nav li a{
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    
-}
-nav li:last-child a{
-    border-right: 0;
+/* profile */
+.box_profile {
+    height: 700px;
+    overflow: hidden;
+    @include tablet {
+      height: auto;
     }
-
-nav a#pull{
-    display: none;
-}
-
-
-
-/* 첫번째 */
-  ul{
-    
-    /*list-style-type: none;*/
-    margin: 0;
-    padding: 0;
-    background-color: #fffd86;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(14, 13, 0, 0.1);
   }
-  li{
-    /* position: relative; */
-    display: inline-block;
-    
+  .box_profile::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.5),
+      transparent
+    );
+    transition: 0.5s;
   }
-  li a{
-    color: #3a3a3a;
-    text-align: center;
-    padding: 14.5px 16px;
-    text-decoration: none;
+  .box_profile:hover::before {
+    left: 100%;
   }
-  li a:hover{
-    /*color: #597812;*/
-    color: #a5a5a5;
-    font-weight:normal;
+  .box_profile__row {
+    height: 100%;
+    float: left;
+    padding: 2.6rem 1rem;
+    @include mobile {
+      height: auto;
+      float: none;
+      padding: 0 1rem;
+    }
+    &:first-child {
+      width: 40%;
+      @include mobile {
+        width: 100%;
+      }
+    }
+    &:last-child {
+      width: 60%;
+      @include mobile {
+        width: 100%;
+      }
+    }
   }
-
-/* 메인 이미지 */
-
-.image-box1 {
-  background-image: url(img/nail6.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  height: 50vh;
-  z-index: 0;
-  position: relative;
-  padding: 0%;
-  vertical-align: top;
-  letter-spacing: 0;
-  word-spacing: 0;
-  margin-top: -5px;
-}
-
-.image-box2 {
-  background-image: url(img/nail5.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  height: 50vh;
-  z-index: 0;
-  position: relative;
-  padding: 0%;
-  vertical-align: top;
-  letter-spacing: 0;
-  word-spacing: 0;
-  margin-top: -5px;
-}
-
-.image-box3 {
-  background-image: url(img/nail8.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  height: 50vh;
-  z-index: 0;
-  position: relative;
-  padding: 0%;
-  vertical-align: top;
-  letter-spacing: 0;
-  word-spacing: 0;
-  margin-top: -5px;
-}
-
-
-/* 두번쩨 */
-
-.box {
-  position: relative;
-  width: 50%;
-}
-.box::after {
-  display: block;
-  content: "";
-  padding-bottom: 100%;
-}
-.content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.myimg {
-  filter: brightness(1);
-  transition: 0.3s;
-}
-
-.myimg:hover {
-  filter: brightness(0.5);
-}
-
-
-
-
-
-
-
-
-
-/* 세번쨰 */
-.price-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.price-table th, .price-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-}
-
-.price-table th {
-  background-color: #f2f2f2;
-}
-
-
-
-/* 5번째 */
-
-
-
-
-
-
-/* 6번째 예약 */
-
-.reservation-form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-.form-button {
-  background-color: #fffd86;
-  color: #424242;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-}
-
-
+  .bg-color {
+    background: midnightblue;
+  }
+  .profile__photo {
+    display: block;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    margin: 23px auto;
+    background-color: $purple;
+    box-shadow: rgba(152, 133, 215, 0.5) 0px 7px 29px 0px;
+    background: $purple;
+    overflow: hidden;
+    @include mobile {
+      background: transparent;
+    }
+    & > img {
+      width: 100%;
+      opacity: 0.5;
+      transition: 0.5s;
+      @include mobile {
+        opacity: 1;
+      }
+    }
+  }
+  .profile__photo:hover img {
+    opacity: 1;
+  }
+  .profile__headline {
+    width: 320px;
+    height: 170px;
+    margin: 3.875rem auto;
+    @include mobile {
+      text-align: center;
+      width: max-content;
+      height: auto;
+    }
+  }
+  .greeting {
+    font-family: "NEXON Lv2 Gothic Bold";
+    color: var(--text-purple);
+    font-size: 3em;
+    line-height: 1.2em;
+    opacity: 0;
+    @include mobile {
+      font-size: 5rem;
+    }
+  }
+  .profile__introduction {
+    margin-top: 23px;
+    float: left;
+    width: 380px;
+    height: 300px;
+    padding: 3em 0;
+    line-height: 1.4;
+    opacity: 0;
+    @include tablet {
+      margin-top: 4rem;
+      height: auto;
+    }
+    @include mobile {
+      width: 100%;
+      font-size: 1.5rem;
+      text-align: center;
+      line-height: 1.6;
+      height: auto;
+      padding: 0;
+      float: none;
+    }
+  }
+  .profile__introduction > span {
+    display: block;
+    font-weight: 600;
+    font-size: 18px;
+    @include mobile {
+      font-size: 2rem;
+    }
+  }
+  .profile__introduction > span::selection {
+    background: $purple;
+    color: white;
+  }
+  .profile__info {
+    float: right;
+    width: 200px;
+    height: 300px;
+    margin-top: 23px;
+    padding-top: 3em;
+    margin-right: 30px;
+    @include tablet {
+      width: auto;
+      height: auto;
+      margin-top: 4rem;
+    }
+    @include mobile {
+      width: 100%;
+      height: auto;
+      padding: 0;
+      margin: 5rem 0 0 0;
+      text-align: center;
+      float: none;
+      font-size: 1.5rem;
+    }
+    & > p {
+      display: block;
+      line-height: 1.3;
+      @include mobile {
+        display: inline-block;
+      }
+      &:not(:first-child) {
+        margin-top: 1.2em;
+        @include mobile {
+          margin-left: 1.2em;
+        }
+      }
+    }
+  }
+  .profile__info > p > span {
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+    @include mobile {
+      font-size: 16px;
+    }
+  }
+  .profile__skill {
+    width: 470px;
+    height: 220px;
+    margin-top: 16px;
+    float: right;
+    @include tablet {
+      height: auto;
+      margin-top: 5rem;
+      float: left;
+    }
+    @include mobile {
+      width: 100%;
+      float: none;
+    }
+    & > h3 {
+      position: relative;
+      width: max-content;
+      font-family: "SBAggroB";
+      font-size: 18px;
+      line-height: 1.2;
+      margin-top: 16px;
+      @include mobile {
+        margin: 0 auto;
+      }
+      &::after {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        content: "";
+        display: block;
+        width: 25px;
+        height: 2px;
+        background-color: $purple;
+      }
+    }
+  }
+  .profile__skill-icon::after {
+    display: block;
+    content: "";
+    clear: both;
+    @include mobile {
+      display: none;
+    }
+  }
+  .profile__skill-icon {
+    @include mobile {
+      padding: 2rem;
+      text-align: center;
+    }
+  
+    &:last-child {
+      & > li {
+        &:nth-child(1) > img:hover {
+          @include skillicon(rgba(117, 211, 255, 0.5));
+        }
+        &:nth-child(2) > img:hover {
+          @include skillicon(rgba(182, 8, 8, 0.5));
+        }
+        &:nth-child(3) > img:hover {
+          @include skillicon(rgba(43, 149, 151, 0.5));
+        }
+  
+        &:nth-child(4) > img:hover {
+          @include skillicon(rgba(70, 3, 3, 0.7));
+        }
+      }
+  
+    }
+    & > li {
+      float: left;
+      margin-right: 48px;
+      margin-top: 26px;
+      @include mobile {
+        float: none;
+        display: inline-block;
+        margin: 1rem 2rem 0 0;
+      }
+      img {
+        width: 80%;
+        &:hover {
+          transition: 0.2s;
+          transform: translateY(-5%);
+        }
+      }
+      &:first-child > img:hover {
+        @include skillicon(rgba(255, 138, 88, 0.7));
+      }
+      &:nth-child(2) > img:hover {
+        @include skillicon(rgba(83, 178, 255, 0.7));
+      }
+      &:nth-child(3) > img:hover {
+        @include skillicon(rgba(247, 223, 30, 0.7));
+      }
+      &:nth-child(4) > img:hover {
+        @include skillicon(rgba(86, 139, 173, 0.5));
+        @include skillicon(rgba(0, 140, 255, 0.7));
+      }
+      &:nth-child(5) > img:hover {
+        @include skillicon(rgba(86, 140, 174, 0.7));
+        @include skillicon(rgba(255, 176, 176, 0.7));
+      }
+      &:nth-child(6) > img:hover {
+        @include skillicon(rgba(182, 8, 8, 0.5));
+        @include skillicon(rgba(117, 211, 255, 0.5));
+      }
+      &:nth-child(7) > img:hover {
+        @include skillicon(rgba(43, 149, 151, 0.5));
+      }
+      &:nth-child(8) > img:hover {
+        @include skillicon(rgba(70, 3, 3, 0.7));
+      }
+      &:nth-child(9) > img:hover {
+        @include skillicon(rgba(255, 188, 233, 0.7));
+      }
+      &:nth-child(10) > img:hover {
+        @include skillicon(rgba(0, 140, 255, 0.7));
+        @include skillicon(rgba(116, 192, 255, 0.7));
+      }
+  
+    }
+  
+  }
