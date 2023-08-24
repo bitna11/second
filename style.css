@@ -200,77 +200,7 @@ nav a#pull{
 /* 5번째 */
 
 
-/* r */
 
-.grid-container{
-  width: 100%;
-  display: grid;
-  grid-template-columns: 200px 1fr 300px;
-  grid-row: 100px 1fr 100px;
-  gap:1rem;
-  grid-template-areas: "logo menu menu" "conrent conrent sidbar" "footer footer footer";
-}
-
-.grid-item{
-  padding: 1erm;
-  border-radius: 5px;
-  font-size: 10.5pt;
-}
-
-
-
-.grid-item:nth-child(1){
-  background-image: url(img/p01.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  z-index: 0;
-  position: relative;
-  
-}
-
-.grid-item:nth-child(2){
-  grid-column: 2/4;  
-  background-color: #b4b4b4;
-  color: rgb(255, 255, 255);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  z-index: 0;
-  position: relative;
-}
-
-.grid-item:nth-child(3){
-  grid-column: 1/3;
-  grid-row: 2/4;
-  background-color: #313131;
-  color: #b4b4b4;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  z-index: 0;
-  position: relative;
-}
-
-.grid-item:nth-child(4){
-  background-color: #949494;;
-  color: #313131;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  z-index: 0;
-  position: relative;
-}
-
-.grid-item:nth-child(5){
-  background-color: #202020;
-  color: #ffffff;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  z-index: 0;
-  position: relative;
-}
 
 
 
